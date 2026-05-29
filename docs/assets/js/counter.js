@@ -84,3 +84,50 @@ export function countText(text) {
     paragraphCount: countParagraphs(text)
   };
 }
+
+export function evaluateCharacterLimit(graphemeCount, rawLimit, warningThreshold = 20) {
+  const limit = Number(rawLimit);
+
+  if (
+    rawLimit === "" ||
+    rawLimit === null ||
+    rawLimit === undefined ||
+    !Number.isFinite(limit) ||
+    !Number.isInteger(limit) ||
+    limit < 0
+  ) {
+    return {
+      state: "unlimited",
+      limit: null,
+      remaining: null,
+      exceeded: 0
+    };
+  }
+
+  const remaining = limit - graphemeCount;
+
+  if (remaining < 0) {
+    return {
+      state: "exceeded",
+      limit,
+      remaining,
+      exceeded: Math.abs(remaining)
+    };
+  }
+
+  if (remaining <= warningThreshold) {
+    return {
+      state: "warning",
+      limit,
+      remaining,
+      exceeded: 0
+    };
+  }
+
+  return {
+    state: "normal",
+    limit,
+    remaining,
+    exceeded: 0
+  };
+}

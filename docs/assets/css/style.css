@@ -233,6 +233,42 @@ main.container {
   font-size: 0.92rem;
 }
 
+.limit-controls {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.limit-input-group {
+  display: grid;
+  gap: 8px;
+}
+
+.limit-input-group label {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.limit-input {
+  width: min(240px, 100%);
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 2px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.limit-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.limit-description {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+
 .stats-panel h2 {
   padding-bottom: 14px;
   border-bottom: 1px solid var(--border);
@@ -284,6 +320,44 @@ main.container {
 .stat-card-primary dd {
   font-size: 2.1rem;
   font-weight: 400;
+}
+
+.stat-card-limit[data-limit-state="warning"] {
+  border-color: var(--warning);
+  background: color-mix(in srgb, var(--warning) 18%, var(--surface-muted));
+}
+
+.stat-card-limit[data-limit-state="exceeded"] {
+  border-color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 14%, var(--surface-muted));
+}
+
+.limit-message {
+  margin: 14px 0 0;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  background: var(--surface-muted);
+  color: var(--text);
+  font-size: 0.92rem;
+}
+
+.limit-message[data-limit-state="warning"] {
+  border-color: var(--warning);
+  background: color-mix(in srgb, var(--warning) 12%, var(--surface));
+}
+
+.limit-message[data-limit-state="exceeded"] {
+  border-color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 12%, var(--surface));
+}
+
+.text-input[data-limit-state="warning"] {
+  border-color: var(--warning);
+}
+
+.text-input[data-limit-state="exceeded"] {
+  border-color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 6%, var(--surface));
 }
 
 .details {
@@ -385,6 +459,10 @@ main.container {
   .panel-header {
     align-items: stretch;
     flex-direction: column;
+  }
+
+  .limit-input {
+    width: 100%;
   }
 
   .secondary-button {

@@ -13,6 +13,7 @@ import {
   countLines,
   countParagraphs,
   countText,
+  evaluateCharacterLimit,
   countUtf16CodeUnits,
   countUtf8Bytes
 } from "../docs/assets/js/counter.js";
@@ -63,4 +64,61 @@ test("distinguishes code points and UTF-16 code units for emoji", () => {
 test("counts UTF-8 bytes", () => {
   assert.equal(countUtf8Bytes("a"), 1);
   assert.equal(countUtf8Bytes("あ"), 3);
+});
+
+test("treats an empty limit as unlimited", () => {
+  assert.deepEqual(evaluateCharacterLimit(10, ""), {
+    state: "unlimited",
+    limit: null,
+    remaining: null,
+    exceeded: 0
+  });
+});
+
+test("counts remaining characters at the limit boundary", () => {
+  assert.deepEqual(evaluateCharacterLimit(5, 5), {
+    state: "warning",
+    limit: 5,
+    remaining: 0,
+    exceeded: 0
+  });
+});
+
+test("counts exceeded characters beyond the limit", () => {
+  assert.deepEqual(evaluateCharacterLimit(6, 5), {
+    state: "exceeded",
+    limit: 5,
+    remaining: -1,
+    exceeded: 1
+  });
+});
+
+test("uses warning state when remaining characters are 20 or fewer", () => {
+  assert.equal(evaluateCharacterLimit(1, 20).state, "warning");
+  assert.equal(evaluateCharacterLimit(80, 100).state, "warning");
+});
+
+test("uses normal state when remaining characters are above the warning threshold", () => {
+  assert.deepEqual(evaluateCharacterLimit(79, 100), {
+    state: "normal",
+    limit: 100,
+    remaining: 21,
+    exceeded: 0
+  });
+});
+
+test("treats zero as a valid limit", () => {
+  assert.equal(evaluateCharacterLimit(0, 0).state, "warning");
+  assert.equal(evaluateCharacterLimit(1, 0).state, "exceeded");
+});
+
+test("supports grapheme-based limit checks for emoji", () => {
+  const graphemeCount = countGraphemes("👍🏽");
+  assert.equal(graphemeCount, 1);
+  assert.deepEqual(evaluateCharacterLimit(graphemeCount, 1), {
+    state: "warning",
+    limit: 1,
+    remaining: 0,
+    exceeded: 0
+  });
 });

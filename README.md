@@ -44,6 +44,14 @@ npm test
 - 行数
 - 段落数
 
+## 追加機能
+
+- 文字数上限をその場で設定できます
+- 上限に対する残り文字数、超過文字数を表示します
+- 残り20文字以下で警告表示します
+
+文字数上限の判定は、主表示と同じ「見た目上の文字数」を基準に行います。
+
 ## English summary
 
 This is a static, client-side text counter for GitHub Pages.

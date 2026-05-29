@@ -56,6 +56,23 @@
             placeholder="ここにテキストを入力してください。"
           ></textarea>
 
+          <div class="limit-controls">
+            <div class="limit-input-group">
+              <label for="character-limit">文字数上限</label>
+              <input
+                id="character-limit"
+                class="limit-input"
+                type="number"
+                min="0"
+                inputmode="numeric"
+                placeholder="未設定"
+              >
+            </div>
+            <p class="limit-description">
+              上限判定は「見た目上の文字数」を基準に行います。
+            </p>
+          </div>
+
           <p class="input-note">
             「見た目上の文字数」は、可能な場合はUnicodeの書記素単位で数えます。
           </p>
@@ -68,6 +85,11 @@
             <div class="stat-card stat-card-primary">
               <dt>見た目上の文字数</dt>
               <dd id="grapheme-count">0</dd>
+            </div>
+
+            <div id="limit-panel" class="stat-card stat-card-limit" data-limit-state="unlimited">
+              <dt id="limit-status-label">文字数上限</dt>
+              <dd id="limit-status-value">未設定</dd>
             </div>
 
             <div class="stat-card">
@@ -101,6 +123,8 @@
             </div>
 
           </dl>
+
+          <p id="limit-message" class="limit-message" hidden></p>
         </aside>
       </section>
 
