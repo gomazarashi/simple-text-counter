@@ -13,7 +13,6 @@ import {
   countLines,
   countParagraphs,
   countText,
-  countWords,
   countUtf16CodeUnits,
   countUtf8Bytes
 } from "../docs/assets/js/counter.js";
@@ -26,8 +25,7 @@ test("counts empty text", () => {
     utf16CodeUnitCount: 0,
     utf8ByteCount: 0,
     lineCount: 0,
-    paragraphCount: 0,
-    wordCount: 0
+    paragraphCount: 0
   });
 });
 
@@ -65,10 +63,4 @@ test("distinguishes code points and UTF-16 code units for emoji", () => {
 test("counts UTF-8 bytes", () => {
   assert.equal(countUtf8Bytes("a"), 1);
   assert.equal(countUtf8Bytes("あ"), 3);
-});
-
-test("counts word-like segments", () => {
-  assert.equal(countWords("こんにちは 世界"), 2);
-  assert.equal(countWords("hello world"), 2);
-  assert.equal(countWords("!!!"), 0);
 });

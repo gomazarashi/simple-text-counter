@@ -10,7 +10,6 @@ const lineBreakPattern = /\r\n|\r|\n/g;
 const paragraphSeparatorPattern = /(?:\r\n|\r|\n)(?:[\t \u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\f\v]*(?:\r\n|\r|\n))+/;
 
 let graphemeSegmenter = null;
-let wordSegmenter = null;
 
 function getGraphemeSegmenter() {
   if (graphemeSegmenter !== null) {
@@ -24,20 +23,6 @@ function getGraphemeSegmenter() {
 
   graphemeSegmenter = undefined;
   return graphemeSegmenter;
-}
-
-function getWordSegmenter() {
-  if (wordSegmenter !== null) {
-    return wordSegmenter;
-  }
-
-  if (typeof Intl !== "undefined" && typeof Intl.Segmenter === "function") {
-    wordSegmenter = new Intl.Segmenter("ja", { granularity: "word" });
-    return wordSegmenter;
-  }
-
-  wordSegmenter = undefined;
-  return wordSegmenter;
 }
 
 export function countGraphemes(text) {
@@ -88,25 +73,6 @@ export function countParagraphs(text) {
     .length;
 }
 
-export function countWords(text) {
-  const trimmed = text.trim();
-
-  if (trimmed.length === 0) {
-    return 0;
-  }
-
-  const segmenter = getWordSegmenter();
-
-  if (segmenter !== undefined) {
-    return Array.from(segmenter.segment(trimmed)).filter((segment) => {
-      return segment.isWordLike === true;
-    }).length;
-  }
-
-  const matches = trimmed.match(/[\p{L}\p{N}_]+/gu);
-  return matches === null ? 0 : matches.length;
-}
-
 export function countText(text) {
   return {
     graphemeCount: countGraphemes(text),
@@ -115,7 +81,6 @@ export function countText(text) {
     utf16CodeUnitCount: countUtf16CodeUnits(text),
     utf8ByteCount: countUtf8Bytes(text),
     lineCount: countLines(text),
-    paragraphCount: countParagraphs(text),
-    wordCount: countWords(text)
+    paragraphCount: countParagraphs(text)
   };
 }

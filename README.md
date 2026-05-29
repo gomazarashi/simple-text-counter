@@ -44,7 +44,6 @@ npm test
 - 空白除外文字数
 - 行数
 - 段落数
-- 単語らしき要素数
 
 ## English summary
 

@@ -15,8 +15,7 @@ const outputMap = {
   utf16CodeUnitCount: document.querySelector("#utf16-code-unit-count"),
   utf8ByteCount: document.querySelector("#utf8-byte-count"),
   lineCount: document.querySelector("#line-count"),
-  paragraphCount: document.querySelector("#paragraph-count"),
-  wordCount: document.querySelector("#word-count")
+  paragraphCount: document.querySelector("#paragraph-count")
 };
 
 function formatCount(value) {
