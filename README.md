@@ -9,8 +9,11 @@
 
 ## 使い方
 
-`docs/index.html` をブラウザで開くと利用できます。
+こちらで使用できます。
 
+[https://gomazarashi.com/simple-text-counter/](https://gomazarashi.com/simple-text-counter/)
+
+ローカルで確認する場合は、`docs/index.html` をブラウザで開きます。
 
 ```bash
 python3 -m http.server 8000
@@ -21,10 +24,6 @@ python3 -m http.server 8000
 ```text
 http://localhost:8000/docs/
 ```
-
-## 公開
-
-GitHub Pages では `docs/` を公開対象に設定します。
 
 ## テスト
 
